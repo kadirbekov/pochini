@@ -1,4 +1,4 @@
-package kz.manasa.pochini.controller;
+package kz.manasa.pochini.controllers;
 
 import kz.manasa.pochini.scope.ApplicationScope;
 import org.apache.log4j.Logger;
