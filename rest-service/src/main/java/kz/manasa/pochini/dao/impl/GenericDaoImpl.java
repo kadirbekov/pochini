@@ -7,6 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.Optional;
 
 /**
  * Created by dkadirbekov on 30.06.2016.
@@ -17,15 +21,15 @@ public class GenericDaoImpl implements GenericDao {
     @PersistenceContext
     protected EntityManager em;
 
-    @Transactional
     @Override
+    @Transactional
     public void save(Object object) {
         em.persist(object);
         em.flush();
     }
 
-    @Transactional
     @Override
+    @Transactional
     public Object update(Object object) {
         object = em.merge(object);
         em.flush();
@@ -48,8 +52,8 @@ public class GenericDaoImpl implements GenericDao {
         return entity;
     }
 
-    @Transactional
     @Override
+    @Transactional
     public void delete(Object object) {
         object = em.merge(object);  //reattach the entity first
         em.remove(object);
@@ -57,9 +61,38 @@ public class GenericDaoImpl implements GenericDao {
     }
 
     @Override
+    @Transactional
     public void delete(Long id, Class clazz) {
         em.remove(em.getReference(clazz, id));
         em.flush();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public <ENTITY> ENTITY findById(Class<ENTITY> clazz, Long id) {
+        return em.find(clazz, id);
+    }
+
+    @Override
+    @Transactional
+    public <ENTITY> ENTITY findByCode(Class<ENTITY> clazz, String code) {
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery query = builder.createQuery(clazz);
+        Root root = query.from(clazz);
+
+        query.where(builder.equal(root.get("code").as(String.class), code));
+
+        Optional first = em
+                .createQuery(query.select(root))
+                .setMaxResults(1)
+                .getResultList().stream()
+                .findFirst();
+
+        if (first.isPresent()) {
+            return (ENTITY) first.get();
+        } else {
+            return null;
+        }
     }
 
 }
