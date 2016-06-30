@@ -15,4 +15,8 @@ public interface GenericDao {
 
     void delete(Long id, Class clazz);
 
+    <ENTITY> ENTITY findById(Class<ENTITY> clazz, Long id);
+
+    <ENTITY> ENTITY findByCode(Class<ENTITY> clazz, String code);
+
 }
