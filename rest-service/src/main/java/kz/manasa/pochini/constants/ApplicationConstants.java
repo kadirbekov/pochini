@@ -7,4 +7,6 @@ public class ApplicationConstants {
 
     public static final String APPLICATION_CONTEXT_FILE = "classpath:applicationContext.xml";
 
+    public static final String DB_SCHEMA_COMMON = "common";
+
 }
