@@ -11,6 +11,7 @@ public class ApplicationScope {
 
     private static ApplicationScope instance;
 
+//    public static ApplicationContext ctx;
     public static ApplicationContext ctx = new ClassPathXmlApplicationContext(ApplicationConstants.APPLICATION_CONTEXT_FILE);
 
     public static ApplicationScope getInstance(){
@@ -24,5 +25,7 @@ public class ApplicationScope {
     }
 
     private ApplicationScope(){
+//        ctx = new ClassPathXmlApplicationContext(ApplicationConstants.APPLICATION_CONTEXT_FILE);
+        System.out.println("asd");
     }
 }

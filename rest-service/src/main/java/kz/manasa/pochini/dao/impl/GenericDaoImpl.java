@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -93,6 +94,19 @@ public class GenericDaoImpl implements GenericDao {
         } else {
             return null;
         }
+    }
+
+    @Override
+    @Transactional
+    public <ENTITY> List<ENTITY> findAll(Class<ENTITY> clazz) {
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery query = builder.createQuery(clazz);
+        Root root = query.from(clazz);
+
+        List resultList = em
+                .createQuery(query.select(root))
+                .getResultList();
+        return resultList;
     }
 
 }

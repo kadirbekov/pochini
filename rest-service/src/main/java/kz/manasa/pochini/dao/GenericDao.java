@@ -1,5 +1,7 @@
 package kz.manasa.pochini.dao;
 
+import java.util.List;
+
 /**
  * Created by dkadirbekov on 30.06.2016.
  */
@@ -18,5 +20,7 @@ public interface GenericDao {
     <ENTITY> ENTITY findById(Class<ENTITY> clazz, Long id);
 
     <ENTITY> ENTITY findByCode(Class<ENTITY> clazz, String code);
+
+    <ENTITY> List<ENTITY> findAll(Class<ENTITY> clazz);
 
 }
