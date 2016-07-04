@@ -1,10 +1,10 @@
 package kz.manasa.pochini.models;
 
 import kz.manasa.pochini.constants.ApplicationConstants;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import java.util.UUID;
 
 /**
@@ -16,10 +16,16 @@ import java.util.UUID;
         schema = ApplicationConstants.DB_SCHEMA_COMMON,
         uniqueConstraints = {@UniqueConstraint(name = "currency_code_uk", columnNames = "code")}
 )
-public class Currency {
+public class Currency implements GenericEntity {
 
+    @Id
+    @Type(type = "pg-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
+    @GeneratedValue(generator = "system-uuid")
     private UUID id;
+
     private String code;
+
     private String name;
 
     public UUID getId() {

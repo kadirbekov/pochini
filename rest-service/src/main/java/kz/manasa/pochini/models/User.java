@@ -18,7 +18,7 @@ import java.util.UUID;
         schema = ApplicationConstants.DB_SCHEMA_COMMON,
         uniqueConstraints = {@UniqueConstraint(name = "user_email_uk", columnNames = "email")}
 )
-public class User implements GenericEntity, Serializable {
+public class User implements GenericEntity {
 
     @Id
     @Type(type = "pg-uuid")
