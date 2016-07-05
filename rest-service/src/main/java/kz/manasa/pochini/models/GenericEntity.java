@@ -10,4 +10,6 @@ public interface GenericEntity extends Serializable {
 
     public UUID getId();
 
+    public void setId(UUID id);
+
 }
