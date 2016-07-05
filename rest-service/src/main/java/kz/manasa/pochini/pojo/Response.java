@@ -1,5 +1,7 @@
 package kz.manasa.pochini.pojo;
 
+import org.springframework.http.HttpStatus;
+
 import java.io.Serializable;
 
 /**
@@ -8,6 +10,8 @@ import java.io.Serializable;
 public class Response implements Serializable {
 
     private Object data;
+    private int httpStatusCode;
+
 
     public Object getData() {
         return data;
@@ -19,5 +23,11 @@ public class Response implements Serializable {
 
     public Response(Object data) {
         this.data = data;
+    }
+
+    public Response success() {
+        httpStatusCode = HttpStatus.OK.value();
+
+        return this;
     }
 }
